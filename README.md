@@ -4,3 +4,4 @@ This project consists of building a Q&A website where people have the opportunit
 
 Team developers:
 Arsany Fahmy ~ Arsollo
+Sherief Soliman ~ SheriefS
