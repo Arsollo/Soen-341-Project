@@ -1,0 +1,94 @@
+/** Overall CSS */
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+
+/** Navigation Bar CSS */
+.nav_bar
+{
+	width: 1200px;
+	height: 75px;
+	margin: auto;
+	background-color: rgba(227, 122, 18, 1);
+}
+
+.icon
+{
+	width: 250px;
+	float: left;
+	padding-left: 20px;
+	padding-top: 10px;
+	font-size: 20px;
+}
+
+
+.menu ul
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	justify-content: center;
+}
+.menu ul li{
+	
+	margin-top: 10px;
+	margin-left: 80px;
+	list-style: none;
+	color: white;
+}
+.menu ul li a
+{
+	text-decoration:  none;
+	font-weight: bold;
+	font-size: 25px;
+	font-family: ariel;
+	color: white;
+	transition: 0.4s ease-in-out;
+}
+
+.menu ul li a:hover
+{
+	transition: 0.4 ease-in-out;
+	color: black;
+}
+
+.search
+{
+	width: 200px;
+	height: 40px;
+	border: 1px solid;
+	border-top-left-radius: 9px;
+	border-bottom-left-radius: 9px;
+	font-size: 18px;
+	border-right: none;
+	float: left;
+	color: black;
+}
+
+.search_button
+{
+	width: 100px;
+	height: 40px;
+	border:  2px solid;
+	font-size: 18px;
+	font-weight: bold;
+	border-top-right-radius: 9px;
+	border-bottom-right-radius: 9px;
+	background-color: black;
+	color: rgba(227, 122, 18, 1);
+}
+
+.search_button:hover
+{
+	background-color: rgba(150, 149, 148, 1);
+	color: black;
+	font-size: 20px;
+
+}
+
+
+
+
