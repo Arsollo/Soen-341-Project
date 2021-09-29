@@ -7,3 +7,4 @@ Team developers:
 Arsany Fahmy ~ Arsollo
 Sherief Soliman ~ SheriefS
 Mathilde Therrien-Quintal ~ mathildetq
+Krishnna Shanmugam ~ krishnnas
