@@ -6,4 +6,4 @@ TBD language used.
 Team developers:
 Arsany Fahmy ~ Arsollo
 Sherief Soliman ~ SheriefS
-Mathilde Therrien-Quinta ~ mathildetq
+Mathilde Therrien-Quintal ~ mathildetq
