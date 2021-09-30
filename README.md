@@ -11,7 +11,7 @@ This project consists of building a Q&A website where people have the opportunit
 
 ## **Team Developers:**
 
-Arsany Fahmy ~ _Arsollo_  
+Arsany Fahmy ~ _Arsollo_ (Team Leader)  
 Sherief Soliman ~ _SheriefS_  
 Ruowei Lin ~ _RoyLin0710_  
 Ziming Wang ~ _flossor_  
