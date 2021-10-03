@@ -6,9 +6,9 @@ The objective of this project is to create a Q&A website with a rating system on
 ## **Description:**
 This project consists of building a Q&A website where people have the opportunity to ask and answer questions regarding a certain topic. The website will intially have three main features:  
 
-1. Asking and answering questions  
-2. Users voting on the answers  
-3. Poster accepting the best answer   
+1. Asking and answering questions
+2. Voting on the answers  
+3. Accepting the best answer
 
 ## **Team Developers:**
 
