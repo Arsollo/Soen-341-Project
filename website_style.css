@@ -21,5 +21,67 @@
 }
 
 
+/********************* User Profile Page *********************/
+
+/** User Header as a whole **/
+#user_header
+{
+	background-color: rgb(242, 233, 217);
+	padding: 25px 25px 25px 25px;
+}
+
+/** User Info **/
+#user_info
+{
+	background-color: rgb(240, 195, 127);
+	padding: 10px 10px 10px 10px;
+}
+
+/** User Questions **/
+#user_questions
+{
+	
+}
+#user_asked_questions
+{
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+/** Buttons **/
+#user_sign_out_btn
+{
+	background-color: rgb(196, 79, 79);
+}
+#user_sign_out_btn:hover
+{
+	font-size: 20px;
+	color: black;
+}
+
+#user_edit_profile_btn
+{
+	background-color: rgb(255, 148, 77);
+}
+#user_edit_profile_btn:hover
+{
+	font-size: 20px;
+	color: black;
+}
+
+#user_ask_new_question_btn
+{
+	background-color: rgb(255, 148, 77);
+}
+#user_ask_new_question_btn:hover
+{
+	font-size: 20px;
+	color: black;
+}
+
+
+
+
+
 
 
