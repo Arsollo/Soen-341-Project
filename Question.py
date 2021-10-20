@@ -39,30 +39,6 @@ db.create_all()
 db.session.commit()
 
 
-##class Post(db.Model):
-##    id = db.Column(db.Integer, primary_key=True)
-####  date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-##   user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-##    def __repr__(self):
-##        return f"Post('{self.title}', '{self.date_posted}')"
-
-
-##posts = [
-  ##  {
-  ##      'author': 'Corey Schafer',
-  ##      'title': 'Blog Post 1',
-  ##      'content': 'First post content',
-  ##      'date_posted': 'April 20, 2018'
-  ##  },
-  ##  {
-  ##      'author': 'Jane Doe',
-  ##      'title': 'Blog Post 2',
-  ##      'content': 'Second post content',
-   ##     'date_posted': 'April 21, 2018'
-   ## }
-##]
-
 
 @app.route("/home/")
 def home():
