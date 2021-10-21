@@ -2,7 +2,6 @@ from datetime import datetime
 from flask import Flask, render_template, url_for, flash, redirect,request
 from flask_login import current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
 from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
@@ -39,32 +38,8 @@ db.create_all()
 db.session.commit()
 
 
-##class Post(db.Model):
-##    id = db.Column(db.Integer, primary_key=True)
-####  date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-##   user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-##    def __repr__(self):
-##        return f"Post('{self.title}', '{self.date_posted}')"
-
-
-##posts = [
-  ##  {
-  ##      'author': 'Corey Schafer',
-  ##      'title': 'Blog Post 1',
-  ##      'content': 'First post content',
-  ##      'date_posted': 'April 20, 2018'
-  ##  },
-  ##  {
-  ##      'author': 'Jane Doe',
-  ##      'title': 'Blog Post 2',
-  ##      'content': 'Second post content',
-   ##     'date_posted': 'April 21, 2018'
-   ## }
-##]
-
-
 @app.route("/home/")
+@app.route("/")
 def home():
     questions = Question.query.all()
 
@@ -178,14 +153,7 @@ def answer(question_id):
 #         session["user"] = user
 #         return redirect(url_for("user"))
 #     else:
-#         return render_template("login.html")
-
-# #Profile Page
-# @app.route("/profile")
-# @login_required
-# def profile():
-#     return render_template("profile.html")
-    
+#         return render_template("login.html")   
     
 # # Homepage after login
 # @app.route("/user")
@@ -196,13 +164,11 @@ def answer(question_id):
 #     else:
 #         return redirect(url_for("login"))
 
-
 # @app.route("/logout")
 # @login_required
 # def logout():
 #     session.pop("userr", None)
 #     return redirect(url_for("login"))
-
 
 if __name__ == '__main__':
     app.run(debug=True)
