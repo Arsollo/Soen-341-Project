@@ -23,4 +23,4 @@ Mathilde Therrien-Quintal ~ _mathildetq_
 
 CSS  
 HTML  
-Others TBD
+Python
