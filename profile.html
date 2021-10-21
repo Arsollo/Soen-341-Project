@@ -1,0 +1,71 @@
+{% extends 'home.html' %}
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+
+	<!-- User Profile Header -->
+	<div class="container" id="user_header">
+		<div class="row">
+
+			<!-- Recently asked questions -->
+			<div class="col-9" id="user_questions">
+				<h2>Your recenty asked questions:</h2>
+				<div id="user_asked_questions">
+					<label>Oh Oh! No questions yet</label>
+				</div>
+				
+				<!-- Ask a new Question Button -->
+				<button type="button" class="btn btn-success" id="user_ask_new_question_btn">Ask a new Question!</button>
+
+				<!-- Edit a previously asked question button -->
+				<button type="button" class="btn btn-success" id="user_edit_asked_question_btn">Edit one of your questions</button>
+
+			</div>
+
+
+
+
+			<!-- User info -->
+			<div class="col-3" id="user_info">
+
+				<!-- Username -->
+				<h5>Username1234</h3>
+
+				<!-- Date of Birth -->
+				<div class="user_date_of_birth">
+					<!-- Calendar icon-->
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+ 					<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+					</svg>
+					<label>30/3/1999</label>
+				</div>
+
+				<!-- User email -->
+				<div class="user_email">
+					<!-- email icon-->
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+  					<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+					</svg>
+					<label>User1234@gmail.com</label>
+				</div>
+
+				<!-- User Password (Hashed) -->
+				<div class="user_password">
+					<label>arso*******</label>
+				</div>
+
+				<!-- Sign out button -->
+				<br>
+				<button type="button" class="btn btn-success" id="user_sign_out_btn">Sign out!</button>
+
+				<!-- Edit Info button -->
+				<button type="button" class="btn btn-success" id="user_edit_profile_btn">Edit Info</button>
+
+				
+
+
+			</div>
+		</div>
+	</div>
+
+	{% endblock %}
