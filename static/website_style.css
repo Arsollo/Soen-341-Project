@@ -20,6 +20,43 @@
 
 }
 
+.error {
+    color: red
+}
+
+.vote-btn {
+	appearance:none;
+	border-radius:3px;
+	border:0;
+	background:#fff;
+	padding:15px 12px 15px 40px;
+	font:bold 9px/1.2 arial;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	color:red;
+	box-shadow:0 1px 1px rgba(0,0,0,.2);
+	outline:none;
+	position:relative;
+	transition: all .3s ease-out; 
+	cursor:pointer;
+	overflow:hidden;
+}
+	
+	.icon {
+		position:absolute;
+	  content: "";
+	  left:10px;
+	  top:10px;
+	  width:20px;
+	  height:20px;
+	  border-radius:10px;
+	  display:inline-block;
+	  background:red url(https://jamesmuspratt.com/codepen/img/checkmark.svg) no-repeat 2px 1px;
+	  background-size:16px auto;
+	  transition: all .3s ease-out; 
+  
+	}
+
 
 /********************* User Profile Page *********************/
 
@@ -38,10 +75,10 @@
 }
 
 /** User Questions **/
-#user_questions
+/* #user_questions
 {
 	
-}
+} */
 #user_asked_questions
 {
 	padding-top: 50px;
@@ -78,10 +115,3 @@
 	font-size: 20px;
 	color: black;
 }
-
-
-
-
-
-
-
