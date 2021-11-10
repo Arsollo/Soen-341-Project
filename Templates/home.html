@@ -15,7 +15,7 @@
     	<!-- Navigation Bar -->
 	<nav class="navbar navbar-expand-lg navbar-light ">
         <div class="container-fluid">
-      <a class="navbar-brand" href="/">After Office Hours</a>
+      <a class="navbar-brand" href="#">After Office Hours</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -24,30 +24,18 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
           </li>
-          <!-- Links to be displayed only if logged in -->
-          {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('profile') }}">{{current_user.username}}'s Profile</a>
+            <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('ask') }} ">Ask</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+          <li class="nav-item"></li>
+            <a class="nav-link" href="{{ url_for('about') }} ">Contact Us</a>
           </li>
-          {%endif%}
-          <!-- Links to be displayed only if not logged in -->
-          {% if not current_user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link"href="{{ url_for('login') }} ">Sign in</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link"href="{{ url_for('register') }} ">Register</a>
-          </li>
-          {%endif%}
-          <li class="nav-item"></li>
-            <a class="nav-link" href="{{ url_for('about') }} ">Contact Us</a>
-          </li>       
         </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
