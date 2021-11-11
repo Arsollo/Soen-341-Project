@@ -21,6 +21,7 @@ class User(UserMixin, db.Model):
     #image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     questions = db.relationship('Question', backref='author', lazy=True)
+  
 
 ################# Hash the password, feature #########################
     # @property
@@ -168,15 +169,21 @@ def question(question_id):
 #################################################
 
                 return redirect(url_for('answer', question_id=question_id))
-           #if the vote button is pressed
-            elif request.form.get("vote"):
-
-#################################################
-                ##Implement voting on answer usefulness here
-#################################################
-
+           #if the Upvote button is pressed
+            elif request.form.get("voteUp"):
+                answer_id = request.form.get("voteUp")
+                current_answer = Answer.query.get_or_404(answer_id)
+                current_answer.votes = (current_answer.votes + 1)
+                db.session.commit()
                 return redirect(url_for('answer', question_id=question_id))
 
+            #if the DownVote button is pressed
+            elif request.form.get("voteDown"):
+                answer_id = request.form.get("voteDown")
+                current_answer = Answer.query.get_or_404(answer_id)
+                current_answer.votes = (current_answer.votes - 1)
+                db.session.commit()
+                return redirect(url_for('answer', question_id=question_id))
         else:
             answers = Answer.query.filter_by(answer_to=question_id).all()
             context = {
