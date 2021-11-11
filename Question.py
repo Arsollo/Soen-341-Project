@@ -119,7 +119,13 @@ def login():
 @app.route("/profile")
 @login_required
 def profile():
-        return render_template("profile.html")
+        user = current_user
+        email = user.email
+        context = {
+            'email' : email
+            #Add additional contexts here to pass to HTML, such as username
+            }
+        return render_template("profile.html", **context)
 
 # Question Post page route
 @app.route("/ask/", methods=['GET', 'POST'])
@@ -154,7 +160,7 @@ def question(question_id):
                     answered_by_id = current_user.username,
                     answer_to = question_id, 
                     post_time = datetime.now(), 
-                    votes = 0, 
+                    votes = 0,
                     voted_best = False
                 )
                 db.session.add(answer)
@@ -163,10 +169,11 @@ def question(question_id):
                 return redirect(url_for('answer', question_id=question_id))
             #if the solved button is pressed    
             elif request.form.get("solved"):
-
-#################################################
-                ##Implement asker choosing for solution here?
-#################################################
+                answer_id = request.form.get("solved")
+                current_answer = Answer.query.get_or_404(answer_id)
+                current_answer.voted_best = True
+                question.solved = True
+                db.session.commit()
 
                 return redirect(url_for('answer', question_id=question_id))
            #if the Upvote button is pressed
