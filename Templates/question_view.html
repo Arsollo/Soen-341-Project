@@ -18,11 +18,17 @@ they click on one of the displayed questions-->
                 <!-- Print the answers in the order they were posted -->
                  {% for answer in answers %}
                  <br>
+                 {%if answer.voted_best == True and question.solved == True %}
+                 <!-- A button visible to original poster to choose best answer-->
+                 <p style="color:green"> Best Answer!!</p>
+                 {%endif %}
                  <p class="list-group-item-text">Answered ID: {{ answer.id }}</p>
                   <p class="list-group-item-text">Answer: {{ answer.a_text }}</p>
                   <p class="list-group-item-text">Answered by: {{ answer.answered_by_id }}</p>
                   <p class="list-group-item-text">Poseted on: {{ answer.post_time }}</p>
                   <p class="list-group-item-text">Votes {{ answer.votes }}</p>
+                  <p class="list-group-item-text">voted_best {{ answer.voted_best }}</p>
+
                   <!-- A button to allow for voting  for any authenticated used-->
                   {%if current_user.is_authenticated %}
                   <!-- Upvoting -->
@@ -40,13 +46,13 @@ they click on one of the displayed questions-->
                     </button>
                  
                   {%endif %}
-
-                  {%if current_user.is_authenticated and current_user.username == question.asked_by_id%}
-                  <!-- A second button visible to original poster to choose best answer-->
-                  <button type="submit" class="vote-btn" name="solved" value= "solved">
+                  {%if current_user.is_authenticated and current_user.username == question.asked_by_id and question.solved == False %}
+                  <!-- A button visible to original poster to choose best answer-->
+                  <button type="submit" class="vote-btn" name="solved" value= "{{answer.id}}">
                   <span class="icon"></span> <span class="text">Solved?</span>
                   </button>
                   {%endif %}
+                  <br>
                 {% endfor %}
                 <!-- If a user is authenticated, give them a place to provide an answer -->
                 {%if current_user.is_authenticated %}
