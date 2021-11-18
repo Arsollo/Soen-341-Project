@@ -121,9 +121,14 @@ def login():
 def profile():
         user = current_user
         email = user.email
+        user_name = user.username
+        user_password = user.password
+        questions = Question.query.filter_by(asked_by_id = user_name)
         context = {
-            'email' : email
-            #Add additional contexts here to pass to HTML, such as username
+            'questions' : questions,
+            'email' : email,
+            'user_name' : user_name,
+            'user_password' : user_password
             }
         return render_template("profile.html", **context)
 

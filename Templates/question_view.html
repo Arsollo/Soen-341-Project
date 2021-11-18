@@ -5,60 +5,71 @@ they click on one of the displayed questions-->
 {% block title %}View Question{% endblock %}
 
 {% block content %}
-      <div class="page-header">
-        <h1>{{ question.q_text }}</h1>
-      </div>
         <div class="row">
           <div class="col-lg-12">
             <div class="well bs-component">
               <form class="form-horizontal" method="POST" action="{{ url_for('question', question_id=question.id) }}">
-                <h4 class="list-group-item-heading">{{ question.q_text }}</h4>
-                <p class="list-group-item-text">Asked by ID: {{ question.asked_by_id }}</p>
-                <p class="list-group-item-text">Poseted on: {{ question.post_time }}</p>
-                <!-- Print the answers in the order they were posted -->
-                 {% for answer in answers %}
-                 <br>
-                 {%if answer.voted_best == True and question.solved == True %}
-                 <!-- A button visible to original poster to choose best answer-->
-                 <p style="color:green"> Best Answer!!</p>
-                 {%endif %}
-                 <p class="list-group-item-text">Answered ID: {{ answer.id }}</p>
-                  <p class="list-group-item-text">Answer: {{ answer.a_text }}</p>
-                  <p class="list-group-item-text">Answered by: {{ answer.answered_by_id }}</p>
-                  <p class="list-group-item-text">Poseted on: {{ answer.post_time }}</p>
-                  <p class="list-group-item-text">Votes {{ answer.votes }}</p>
-                  <p class="list-group-item-text">voted_best {{ answer.voted_best }}</p>
-
-                  <!-- A button to allow for voting  for any authenticated used-->
-                  {%if current_user.is_authenticated %}
-                  <!-- Upvoting -->
-                   <button type="submit"  name="voteUp" value= "{{answer.id}}">
-                    <svg   xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up" viewBox="0 0 16 16">
-                      <path d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
-                    </svg>
-                    </button>
-
-                     <!-- DownVoting -->
-                   <button type="submit"  name="voteDown" value= "{{answer.id}}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
-                      <path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
-                    </svg>
-                    </button>
-                 
-                  {%endif %}
-                  {%if current_user.is_authenticated and current_user.username == question.asked_by_id and question.solved == False %}
-                  <!-- A button visible to original poster to choose best answer-->
-                  <button type="submit" class="vote-btn" name="solved" value= "{{answer.id}}">
-                  <span class="icon"></span> <span class="text">Solved?</span>
-                  </button>
-                  {%endif %}
+                <!-- Question header-->
+                <div class="asked_question_header">
+                  <h2>{{ question.q_text }}</h2>
                   <br>
-                {% endfor %}
+                  <p class="list-group-item-text">Asked by ID: {{ question.asked_by_id }}</p>
+                  <p class="list-group-item-text">Posted on: {{ question.post_time }}</p>
+                </div>
+              
+                <!-- Print the answers in the order they were posted -->
+                <div class="displayed_answers">
+                  {% for answer in answers %}
+                  <div class="individual_answer">
+                    <br>
+                    {%if answer.voted_best == True and question.solved == True %}
+                    <!-- A button visible to original poster to choose best answer-->
+                    <p style="color:green"> Best Answer!!</p>
+                    {%endif %}
+                    <!-- The answer header -->
+                    <div class="displayed_answer_header">
+                      <p class="list-group-item-text">{{ answer.a_text }}</p>
+                     <br>
+                    </div>
+
+                    <p class="list-group-item-text">Answered ID: {{ answer.id }}</p>
+                    <p class="list-group-item-text">Answered by: {{ answer.answered_by_id }}</p>
+                    <p class="list-group-item-text">Posted on: {{ answer.post_time }}</p>
+                    <p class="list-group-item-text">Votes {{ answer.votes }}</p>
+                    <p class="list-group-item-text">voted_best {{ answer.voted_best }}</p>
+
+                      <!-- A button to allow for voting  for any authenticated used-->
+                      {%if current_user.is_authenticated %}
+                      <!-- Upvoting -->
+                      <button type="submit"  name="voteUp" value= "{{answer.id}}">
+                        <svg   xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up" viewBox="0 0 16 16">
+                          <path d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
+                        </svg>
+                        </button>
+
+                        <!-- DownVoting -->
+                      <button type="submit"  name="voteDown" value= "{{answer.id}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                          <path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
+                        </svg>
+                        </button>
+                    
+                      {%endif %}
+                      {%if current_user.is_authenticated and current_user.username == question.asked_by_id and question.solved == False %}
+                      <!-- A button visible to original poster to choose best answer-->
+                      <button type="submit" class="vote-btn" name="solved" value= "{{answer.id}}">
+                      <span class="icon"></span> <span class="text">Solved?</span>
+                      </button>
+                      {%endif %}
+                      <br>
+                  </div>
+                  {% endfor %}
+                </div>
                 <!-- If a user is authenticated, give them a place to provide an answer -->
                 {%if current_user.is_authenticated %}
-                <fieldset>
+                <fieldset class="prompt_user_to_answer">
                   <div class="form-group">
-                    <label for="textArea" class="col-lg-2 control-label">Answer</label>
+                    <label for="textArea" class="col-lg-2 control-label">Provide an answer!</label>
                     <div class="col-lg-10">
                       <textarea class="form-control" name="answer" rows="3" id="textArea"></textarea>
                     </div>
@@ -72,11 +83,14 @@ they click on one of the displayed questions-->
                 {%endif %}
                 <!-- If no user logged in, prompt to sign in -->
                 {% if not current_user.is_authenticated %}
-                <div class="border-top pt-3">
-                  <small class="text-muted">
-                      Think you can help? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now!</a>
-                  </small>
+                <div class="prompt_user_to_sign_in">
+                  <div class="border-top pt-3">
+                    <small class="text-muted">
+                        Think you can help? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now!</a>
+                    </small>
+                  </div>
                 </div>
+               
                 {%endif %}
               </form>
             </div>

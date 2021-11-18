@@ -115,3 +115,129 @@
 	font-size: 20px;
 	color: black;
 }
+
+
+
+/********************* Home Page  *********************/
+
+/** Questions Asked**/
+#question_header
+{
+	padding: 25px;
+}
+
+.home_asked_questions
+{
+	margin: 25px 25px 25px 25px;
+	background-color: rgb(242, 233, 217);
+}
+
+.home_asked_questions a
+{
+	padding: 25px;
+	border-style: solid;
+	border-width: 6px;
+	border-color: rgb(255, 148, 77);
+	background-color: rgb(242, 233, 217);
+}
+
+.home_asked_questions a h4
+{
+	color: rgb(105, 64, 8);
+	padding-bottom: 25px;
+	/**text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;**/
+
+	font-size: 30px;
+}
+
+
+/********************* Answers to asked Questions  *********************/
+
+
+.asked_question_header
+{
+	background-color: rgb(240, 195, 127);
+	color: rgb(105, 64, 8);
+	margin: 25px;
+	padding: 25px;
+}
+
+.displayed_answers
+{
+	
+	padding: 25px;
+}
+
+.individual_answer
+{
+	margin-top: 20px;
+	padding: 25px;
+	border-style: solid;
+	border-width: 3px;
+	background-color: rgb(242, 233, 217);
+	border-color: rgb(240, 195, 127);
+}
+
+.displayed_answer_header
+{
+	font-size: 30px;
+	color: rgb(87, 57, 17);
+	
+}
+
+.prompt_user_to_answer
+{
+	padding: 25px;
+	margin-left: 25px;
+	background-color: rgb(240, 195, 127);
+}
+.prompt_user_to_answer label
+{
+	font-size: 20px;
+	color: rgb(105, 64, 8);
+}
+.prompt_user_to_answer button
+{
+	background-color: rgb(255, 148, 77);
+}
+.prompt_user_to_answer button:hover
+{
+	background-color: rgb(255, 148, 77);
+	font-size: 20px;
+	color: black;
+}
+
+.prompt_user_to_sign_in
+{
+	padding: 25px;
+	margin-left: 25px;
+	background-color: rgb(240, 195, 127);
+}
+.prompt_user_to_sign_in small
+{
+	font-size: 15px;
+}
+
+
+/********************* Ask Page  *********************/
+.ask_a_question
+{
+	padding: 25px;
+	margin-left: 25px;
+	background-color: rgb(240, 195, 127);
+}
+.ask_a_question label
+{
+	font-size: 20px;
+	color: rgb(105, 64, 8);
+}
+.ask_a_question button
+{
+	background-color: rgb(255, 148, 77);
+}
+.ask_a_question button:hover
+{
+	background-color: rgb(255, 148, 77);
+	font-size: 20px;
+	color: black;
+}

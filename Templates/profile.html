@@ -13,11 +13,21 @@
 			<div class="col-9" id="user_questions">
 				<h2>Your recenty asked questions:</h2>
 				<div id="user_asked_questions">
-					<label>Oh Oh! No questions yet</label>
+					{% if questions %}
+						{% for question in questions %}
+						<a href="{{url_for('question', question_id = question.id)}}" class="list-group-item">
+							<h4 class="list-group-item-heading">{{ question.q_text }}</h4>
+							<p class="list-group-item-text">Asked by: {{ question.asked_by_id }}</p>
+							<p class="list-group-item-text">Poseted on: {{ question.post_time }}</p>
+							<p class="list-group-item-text">Solved? {{ question.solved }}</p>
+						</a>
+						{% endfor %}
+                    {% endif %}
+					
 				</div>
 				
 				<!-- Ask a new Question Button -->
-				<button type="button" class="btn btn-success" id="user_ask_new_question_btn">Ask a new Question!</button>
+				<button type="button" class="btn btn-success" id="user_ask_new_question_btn" onclick="window.location.href='{{ url_for( 'ask') }}';">Ask a new Question!</button>
 
 				<!-- Edit a previously asked question button -->
 				<button type="button" class="btn btn-success" id="user_edit_asked_question_btn">Edit one of your questions</button>
@@ -31,16 +41,16 @@
 			<div class="col-3" id="user_info">
 
 				<!-- Username -->
-				<h5>UserName</h3>
+				<h5>{{user_name}}</h3>
 
-				<!-- Date of Birth -->
+				<!-- Date of Birth 
 				<div class="user_date_of_birth">
-					<!-- Calendar icon-->
+					Calendar icon
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
  					<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
 					</svg>
 					<label>30/3/1999</label>
-				</div>
+				</div> -->
 
 				<!-- User email -->
 				<div class="user_email">
@@ -53,12 +63,12 @@
 
 				<!-- User Password (Hashed) -->
 				<div class="user_password">
-					<label>arso*******</label>
+					<label>Password: {{user_password}}</label>
 				</div>
 
 				<!-- Sign out button -->
 				<br>
-				<button type="button" class="btn btn-success" id="user_sign_out_btn">Sign out!</button>
+				<button type="button" class="btn btn-success" id="user_sign_out_btn" onclick="window.location.href='{{ url_for( 'logout') }}';">Sign out!</button>
 
 				<!-- Edit Info button -->
 				<button type="button" class="btn btn-success" id="user_edit_profile_btn">Edit Info</button>
