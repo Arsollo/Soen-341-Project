@@ -22,6 +22,10 @@
 							<p class="list-group-item-text">Solved? {{ question.solved }}</p>
 						</a>
 						{% endfor %}
+						
+						{% else %}
+                 		   <h2>It looks like you haven't asked any questions yet!</h2>
+
                     {% endif %}
 					
 				</div>
@@ -30,7 +34,7 @@
 				<button type="button" class="btn btn-success" id="user_ask_new_question_btn" onclick="window.location.href='{{ url_for( 'ask') }}';">Ask a new Question!</button>
 
 				<!-- Edit a previously asked question button -->
-				<button type="button" class="btn btn-success" id="user_edit_asked_question_btn">Edit one of your questions</button>
+				<button type="button" class="btn btn-success" id="user_edit_asked_question_btn" onclick="window.location.href='{{ url_for( 'go_to_edit_questions') }}';">Edit one of your questions</button>
 
 			</div>
 
@@ -71,7 +75,7 @@
 				<button type="button" class="btn btn-success" id="user_sign_out_btn" onclick="window.location.href='{{ url_for( 'logout') }}';">Sign out!</button>
 
 				<!-- Edit Info button -->
-				<button type="button" class="btn btn-success" id="user_edit_profile_btn">Edit Info</button>
+				<button type="button" class="btn btn-success" id="user_edit_profile_btn" onclick="window.location.href='{{ url_for( 'edit_user_profile') }}';">Edit Info</button>
 
 				
 
