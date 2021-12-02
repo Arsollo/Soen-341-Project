@@ -35,8 +35,8 @@ they click on one of the displayed questions-->
                     <p class="list-group-item-text">Answered ID: {{ answer.id }}</p>
                     <p class="list-group-item-text">Answered by: {{ answer.answered_by_id }}</p>
                     <p class="list-group-item-text">Posted on: {{ answer.post_time }}</p>
-                    <p class="list-group-item-text">Votes {{ answer.votes }}</p>
                     <p class="list-group-item-text">voted_best {{ answer.voted_best }}</p>
+                    <br>
 
                       <!-- A button to allow for voting  for any authenticated used-->
                       {%if current_user.is_authenticated %}
@@ -60,7 +60,10 @@ they click on one of the displayed questions-->
                       <button type="submit" class="vote-btn" name="solved" value= "{{answer.id}}">
                       <span class="icon"></span> <span class="text">Solved?</span>
                       </button>
+                      <br>
+                      
                       {%endif %}
+                      <p class="list-group-item-text" id="votes">Votes: {{ answer.votes }}</p>
                       <br>
                   </div>
                   {% endfor %}
