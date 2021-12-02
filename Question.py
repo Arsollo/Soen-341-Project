@@ -190,9 +190,10 @@ def question(question_id):
            #if the Upvote button is pressed
             elif request.form.get("voteUp"):
                 #check if user has voted already. If not, user vote can be captured
-                voted_by_user = Votes.query.filter_by(voted_by_id = current_user.id).first()
+                answer_id = request.form.get("voteUp")
+                current_answer = Answer.query.get_or_404(answer_id)
+                voted_by_user = Votes.query.filter_by(voted_by_id = current_user.id, voted_on = answer_id).first()
                 if voted_by_user == None:
-                    answer_id = request.form.get("voteUp")
                     current_answer = Answer.query.get_or_404(answer_id)
                     current_answer.votes = (current_answer.votes + 1)
                     vote_pressed = Votes(voted_by_id = current_user.id, 
@@ -214,15 +215,16 @@ def question(question_id):
             #if the DownVote button is pressed
             elif request.form.get("voteDown"):
                 #check if user has voted already. If not, user vote can be captured
-                voted_by_user = Votes.query.filter_by(voted_by_id = current_user.id).first()
+                answer_id = request.form.get("voteDown")
+                current_answer = Answer.query.get_or_404(answer_id)
+                voted_by_user = Votes.query.filter_by(voted_by_id = current_user.id, voted_on = answer_id).first()
                 if voted_by_user == None:
-                    answer_id = request.form.get("voteDown")
                     current_answer = Answer.query.get_or_404(answer_id)
                     current_answer.votes = (current_answer.votes - 1)
                     vote_pressed = Votes(voted_by_id = current_user.id, 
                         voted_on = answer_id)
                     db.session.add(vote_pressed)
-                db.session.commit()
+                    db.session.commit()
 
                 #sorting answers according to number of votes
                 q1 = Answer.query.filter_by(answer_to=question_id)
