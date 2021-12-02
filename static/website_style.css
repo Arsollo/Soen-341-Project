@@ -42,20 +42,20 @@
 	overflow:hidden;
 }
 	
-.icon {
-	position:absolute;
-	content: "";
-	left:10px;
-	top:10px;
-	width:20px;
-	height:20px;
-	border-radius:10px;
-	display:inline-block;
-	background:red url(https://jamesmuspratt.com/codepen/img/checkmark.svg) no-repeat 2px 1px;
-	background-size:16px auto;
-	transition: all .3s ease-out; 
-
-}
+	.icon {
+		position:absolute;
+	  content: "";
+	  left:10px;
+	  top:10px;
+	  width:20px;
+	  height:20px;
+	  border-radius:10px;
+	  display:inline-block;
+	  background:red url(https://jamesmuspratt.com/codepen/img/checkmark.svg) no-repeat 2px 1px;
+	  background-size:16px auto;
+	  transition: all .3s ease-out; 
+  
+	}
 
 
 /********************* User Profile Page *********************/
@@ -240,45 +240,4 @@
 	background-color: rgb(255, 148, 77);
 	font-size: 20px;
 	color: black;
-}
-
-
-/********************* About Page  *********************/
-.about_info
-{
-	background-color: rgb(240, 195, 127);
-	margin-top: 40px;
-	margin-left: 40px;
-	margin-right: 40px;
-	padding: 25px;
-}
-
-#creators_header
-{
-	color: rgb(105, 64, 8);
-}
-
-#creators
-{
-	padding: 5px;
-}
-#creators:hover
-{
-	font-size: 30px;
-	color: rgb(255, 148, 77);
-	padding: 5px;
-}
-
-.mission
-{
-	background-color: rgb(240, 195, 127);
-	margin-left: 40px;
-	margin-right: 40px;
-	padding: 25px;
-}
-#mission_text
-{
-    overflow-wrap: break-word;
-    white-space: normal;
-	font-size: 25px;
 }
