@@ -153,7 +153,10 @@
 
 /********************* Answers to asked Questions  *********************/
 
-
+#votes
+{
+	color: rgb(105, 64, 8);
+}
 .asked_question_header
 {
 	background-color: rgb(240, 195, 127);

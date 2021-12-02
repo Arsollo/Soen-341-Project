@@ -187,7 +187,18 @@ def question(question_id):
                 current_answer = Answer.query.get_or_404(answer_id)
                 current_answer.votes = (current_answer.votes + 1)
                 db.session.commit()
-                return redirect(url_for('answer', question_id=question_id))
+
+                #sorting answers according to number of votes
+                q1 = Answer.query.filter_by(answer_to=question_id)
+                q1.all()
+                q1.order_by(Answer.votes).all()
+                answers = q1.order_by(Answer.votes.desc()).all()
+                context = {
+                'question' : question,
+                'answers' : answers
+                }
+                return render_template( 'question_view.html', question_id=question_id, **context)   
+                
 
             #if the DownVote button is pressed
             elif request.form.get("voteDown"):
@@ -195,7 +206,18 @@ def question(question_id):
                 current_answer = Answer.query.get_or_404(answer_id)
                 current_answer.votes = (current_answer.votes - 1)
                 db.session.commit()
-                return redirect(url_for('answer', question_id=question_id))
+
+                #sorting answers according to number of votes
+                q1 = Answer.query.filter_by(answer_to=question_id)
+                q1.all()
+                q1.order_by(Answer.votes).all()
+                answers = q1.order_by(Answer.votes.desc()).all()
+                context = {
+                'question' : question,
+                'answers' : answers
+                }
+                return render_template( 'question_view.html', question_id=question_id, **context)
+                
         else:
             answers = Answer.query.filter_by(answer_to=question_id).all()
             context = {
