@@ -4,7 +4,7 @@ from flask_login import UserMixin, current_user, login_required, login_user, log
 from sqlalchemy.orm import query
 from werkzeug.security import generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from forms import RegistrationForm, LoginForm
+from forms import ProfileForm, RegistrationForm, LoginForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
@@ -18,7 +18,6 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    #image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     questions = db.relationship('Question', backref='author', lazy=True)
   
@@ -36,7 +35,7 @@ class User(UserMixin, db.Model):
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     q_text = db.Column(db.Text)
-    asked_by_id = db.Column(db.String, db.ForeignKey('user.username'))
+    asked_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_time = db.Column(db.DateTime)
     solved = db.Column(db.Boolean)
     answers = db.relationship('Answer', backref='question', lazy = True)
@@ -66,9 +65,11 @@ login_manager.login_view = "login"
 @app.route("/")
 def home():
     questions = Question.query.all()
+    users = User.query.all()
 
     context = {
-        'questions' : questions
+        'questions' : questions,
+        'users' : users
     }
     return render_template('home.html', **context)
 
@@ -100,13 +101,12 @@ def register():
 
 #Login page route
 @app.route("/login/", methods=['GET', 'POST'])
-def login():
+def login(): 
     form = LoginForm()
     if form.validate_on_submit() and request.method=='POST':
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
-
         if not user or not (password==user.password):
             flash(u'Login Unsuccessful. Please check username and password', 'error')
             
@@ -122,8 +122,9 @@ def profile():
         user = current_user
         email = user.email
         user_name = user.username
+        user_id = user.id
         user_password = user.password
-        questions = Question.query.filter_by(asked_by_id = user_name)
+        questions = Question.query.filter_by(asked_by_id = user_id)
         context = {
             'questions' : questions,
             'email' : email,
@@ -141,7 +142,7 @@ def ask():
 
         question = Question(
             q_text = question, 
-            asked_by_id =current_user.username,
+            asked_by_id =current_user.id,
             post_time = datetime.now(),
             solved = False
         )
@@ -197,8 +198,7 @@ def question(question_id):
                 'question' : question,
                 'answers' : answers
                 }
-                return render_template( 'question_view.html', question_id=question_id, **context)   
-                
+                return render_template( 'question_view.html', question_id=question_id, **context)  
 
             #if the DownVote button is pressed
             elif request.form.get("voteDown"):
@@ -217,7 +217,6 @@ def question(question_id):
                 'answers' : answers
                 }
                 return render_template( 'question_view.html', question_id=question_id, **context)
-                
         else:
             answers = Answer.query.filter_by(answer_to=question_id).all()
             context = {
@@ -249,15 +248,15 @@ def logout():
 #Edit user profile
 @app.route("/edit_user_profile/")
 def edit_user_profile():
-    form = RegistrationForm()
+    form = ProfileForm()
     user = current_user
     email = user.email
-    user_name = user.username
-    user_password = user.password
+    username = user.username
+    password = user.password
     context = {
         'email' : email,
-        'user_name' : user_name,
-        'user_password' : user_password
+        'user_name' : username,
+        'user_password' : password
         }
     return render_template('edit_profile.html', **context, form = form)
 
@@ -265,25 +264,25 @@ def edit_user_profile():
 @app.route("/update_user_profile/", methods=['POST'])
 def update_user_profile():
     user_to_update = current_user
-    if request.method =='POST':
-        username = request.form['user_name']
-        email = request.form['user_email']
-        password = request.form['user_password']
-
+    form = ProfileForm()
+    if form.validate_on_submit() and request.method =='POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
         user_to_update.username = username
         user_to_update.email = email
         user_to_update.password = password
         db.session.commit()
-     
         return redirect(url_for('profile'))
-   
+    else:
+        return redirect(url_for('edit_user_profile'))
 
 
 #go to edit_user_questions
 @app.route("/go_to_edit_questions/")
 def go_to_edit_questions():
     user = current_user
-    questions = Question.query.filter_by(asked_by_id = user.username)
+    questions = Question.query.filter_by(asked_by_id = user.id)
     context = {
         'questions' : questions
         }
@@ -293,14 +292,15 @@ def go_to_edit_questions():
 @app.route("/edit_questions/", methods=['POST'])
 def edit_questions():
     user = current_user
-    questions = Question.query.filter_by(asked_by_id = user.username)
+    questions = Question.query.filter_by(asked_by_id = user.id)
     context = {
         'questions' : questions
         }
     if request.method =='POST':
         question_id = request.form['question_id']
 
-        Question.query.filter_by(id=question_id).delete()
+        question_to_delete = Question.query.get_or_404(question_id)
+        db.session.delete(question_to_delete)
         db.session.commit()
         return render_template("edit_questions.html", **context)
 

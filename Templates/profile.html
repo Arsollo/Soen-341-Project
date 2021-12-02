@@ -13,11 +13,11 @@
 			<div class="col-9" id="user_questions">
 				<h2>Your recenty asked questions:</h2>
 				<div id="user_asked_questions">
-					{% if questions %}
+					{% if questions != None %}
 						{% for question in questions %}
 						<a href="{{url_for('question', question_id = question.id)}}" class="list-group-item">
 							<h4 class="list-group-item-heading">{{ question.q_text }}</h4>
-							<p class="list-group-item-text">Asked by: {{ question.asked_by_id }}</p>
+							<p class="list-group-item-text">Asked by: {{ user_name }}</p>
 							<p class="list-group-item-text">Poseted on: {{ question.post_time }}</p>
 							<p class="list-group-item-text">Solved? {{ question.solved }}</p>
 						</a>
@@ -37,9 +37,6 @@
 				<button type="button" class="btn btn-success" id="user_edit_asked_question_btn" onclick="window.location.href='{{ url_for( 'go_to_edit_questions') }}';">Edit one of your questions</button>
 
 			</div>
-
-
-
 
 			<!-- User info -->
 			<div class="col-3" id="user_info">
@@ -76,10 +73,6 @@
 
 				<!-- Edit Info button -->
 				<button type="button" class="btn btn-success" id="user_edit_profile_btn" onclick="window.location.href='{{ url_for( 'edit_user_profile') }}';">Edit Info</button>
-
-				
-
-
 			</div>
 		</div>
 	</div>
