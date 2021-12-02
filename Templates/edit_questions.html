@@ -9,14 +9,14 @@
         <div class="col-9" id="user_questions">
             
             <div id="user_asked_questions">
-                {% if questions %}
+                {% if questions != None %}
                 <h2 id="recently_asked">Your recenty asked questions:</h2>
                 <br>
                     {% for question in questions %}
                     <form action="{{ url_for('edit_questions') }}" method="post">
                         <a href="{{url_for('question', question_id = question.id)}}" class="list-group-item" id="questions_asked">
                             <p class="list-group-item-heading">{{ question.q_text }}</p>
-                            <p class="list-group-item-text">Asked by: {{ question.asked_by_id }}</p>
+                            <p class="list-group-item-text">Asked by: {{ current_user.username }}</p>
                             <p class="list-group-item-text">Poseted on: {{ question.post_time }}</p>
                             <p class="list-group-item-text">Solved? {{ question.solved }}</p>
                         </a>

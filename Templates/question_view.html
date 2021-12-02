@@ -55,15 +55,14 @@ they click on one of the displayed questions-->
                         </button>
                     
                       {%endif %}
-                      {%if current_user.is_authenticated and current_user.username == question.asked_by_id and question.solved == False %}
+                      {%if current_user.is_authenticated and current_user.id == question.asked_by_id and question.solved == False %}
                       <!-- A button visible to original poster to choose best answer-->
                       <button type="submit" class="vote-btn" name="solved" value= "{{answer.id}}">
                       <span class="icon"></span> <span class="text">Solved?</span>
                       </button>
                       <br>
-                      
                       {%endif %}
-                      <p class="list-group-item-text" id="votes">Votes: {{ answer.votes }}</p>
+                      <p class="list-group-item-text">Votes {{ answer.votes }}</p>
                       <br>
                   </div>
                   {% endfor %}
