@@ -41,20 +41,28 @@ they click on one of the displayed questions-->
                       <!-- A button to allow for voting  for any authenticated used-->
                       {%if current_user.is_authenticated %}
                       <!-- Upvoting -->
-                      <button type="submit"  name="voteUp" value= "{{answer.id}}">
+                      <button type="submit"  name="voteUp" value= "{{answer.id}}" id="up_vote">
                         <svg   xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up" viewBox="0 0 16 16">
                           <path d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
                         </svg>
-                        </button>
+                      </button>
 
-                        <!-- DownVoting -->
-                      <button type="submit"  name="voteDown" value= "{{answer.id}}">
+                      <!-- DownVoting -->
+                      <button type="submit"  name="voteDown" value= "{{answer.id}}" id="down_vote">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
                           <path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
                         </svg>
-                        </button>
+                      </button>
+
+                      <!-- If User alreaday voted once-->
+                      {%if voted_by_user == True %}
+                      <label id="already_voted"> Already voted!</label>
+                      {%endif %}
                     
                       {%endif %}
+                      
+                      <p class="list-group-item-text" id="votes">Votes: {{ answer.votes }}</p>
+                      <br>
                       {%if current_user.is_authenticated and current_user.id == question.asked_by_id and question.solved == False %}
                       <!-- A button visible to original poster to choose best answer-->
                       <button type="submit" class="vote-btn" name="solved" value= "{{answer.id}}">
@@ -62,8 +70,6 @@ they click on one of the displayed questions-->
                       </button>
                       <br>
                       {%endif %}
-                      <p class="list-group-item-text" id="votes">Votes: {{ answer.votes }}</p>
-                      <br>
                   </div>
                   {% endfor %}
                 </div>

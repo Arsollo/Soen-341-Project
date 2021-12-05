@@ -50,6 +50,11 @@ class Answer(db.Model):
     votes = db.Column(db.Integer)
     voted_best = db.Column(db.Boolean)
 
+class Votes (db.Model):
+    id = id = db.Column(db.Integer, primary_key=True)
+    voted_by_id = db.Column(db.String, db.ForeignKey('user.id'))
+    voted_on = db.Column(db.Integer, db.ForeignKey('answer.id'))
+
 db.create_all()
 db.session.commit()
 
@@ -182,41 +187,94 @@ def question(question_id):
                 db.session.commit()
 
                 return redirect(url_for('answer', question_id=question_id))
+
+
            #if the Upvote button is pressed
             elif request.form.get("voteUp"):
                 answer_id = request.form.get("voteUp")
                 current_answer = Answer.query.get_or_404(answer_id)
-                current_answer.votes = (current_answer.votes + 1)
-                db.session.commit()
+                voted_by_user = Votes.query.filter_by(voted_by_id = current_user.id, voted_on = answer_id).first()
 
-                #sorting answers according to number of votes
-                q1 = Answer.query.filter_by(answer_to=question_id)
-                q1.all()
-                q1.order_by(Answer.votes).all()
-                answers = q1.order_by(Answer.votes.desc()).all()
-                context = {
-                'question' : question,
-                'answers' : answers
-                }
-                return render_template( 'question_view.html', question_id=question_id, **context)  
+                #check if user has voted already. If not, user vote can be captured
+                if voted_by_user == None:
+                    voted_by_user = True
+                    current_answer = Answer.query.get_or_404(answer_id)
+                    current_answer.votes = (current_answer.votes + 1)
+                    vote_pressed = Votes(voted_by_id = current_user.id, 
+                        voted_on = answer_id)
+                    db.session.add(vote_pressed)
+                    db.session.commit()
+
+                    #sorting answers according to number of votes
+                    q1 = Answer.query.filter_by(answer_to=question_id)
+                    q1.all()
+                    q1.order_by(Answer.votes).all()
+                    answers = q1.order_by(Answer.votes.desc()).all()
+                    context = {
+                    'question' : question,
+                    'answers' : answers
+                    }
+                    return render_template( 'question_view.html', voted_by_user = False, question_id=question_id, **context)  
+
+                else:
+                    voted_by_user = True
+
+                    #sorting answers according to number of votes
+                    q1 = Answer.query.filter_by(answer_to=question_id)
+                    q1.all()
+                    q1.order_by(Answer.votes).all()
+                    answers = q1.order_by(Answer.votes.desc()).all()
+                    context = {
+                    'question' : question,
+                    'answers' : answers
+                    }
+
+                    return render_template( 'question_view.html', voted_by_user = voted_by_user, question_id=question_id, **context)  
+
+                
 
             #if the DownVote button is pressed
             elif request.form.get("voteDown"):
                 answer_id = request.form.get("voteDown")
                 current_answer = Answer.query.get_or_404(answer_id)
-                current_answer.votes = (current_answer.votes - 1)
-                db.session.commit()
+                voted_by_user = Votes.query.filter_by(voted_by_id = current_user.id, voted_on = answer_id).first()
 
-                #sorting answers according to number of votes
-                q1 = Answer.query.filter_by(answer_to=question_id)
-                q1.all()
-                q1.order_by(Answer.votes).all()
-                answers = q1.order_by(Answer.votes.desc()).all()
-                context = {
-                'question' : question,
-                'answers' : answers
-                }
-                return render_template( 'question_view.html', question_id=question_id, **context)
+                #check if user has voted already. If not, user vote can be captured
+                if voted_by_user == None:
+                    voted_by_user = True
+                    current_answer = Answer.query.get_or_404(answer_id)
+                    current_answer.votes = (current_answer.votes - 1)
+                    vote_pressed = Votes(voted_by_id = current_user.id, 
+                        voted_on = answer_id)
+                    db.session.add(vote_pressed)
+                    db.session.commit()
+
+                    #sorting answers according to number of votes
+                    q1 = Answer.query.filter_by(answer_to=question_id)
+                    q1.all()
+                    q1.order_by(Answer.votes).all()
+                    answers = q1.order_by(Answer.votes.desc()).all()
+                    context = {
+                    'question' : question,
+                    'answers' : answers
+                    }
+                    return render_template( 'question_view.html', voted_by_user = False, question_id=question_id, **context)
+
+                else:
+                    voted_by_user = True
+
+                    #sorting answers according to number of votes
+                    q1 = Answer.query.filter_by(answer_to=question_id)
+                    q1.all()
+                    q1.order_by(Answer.votes).all()
+                    answers = q1.order_by(Answer.votes.desc()).all()
+                    context = {
+                    'question' : question,
+                    'answers' : answers
+                    }
+                    return render_template( 'question_view.html', voted_by_user = voted_by_user, question_id=question_id, **context)
+
+                
         else:
             answers = Answer.query.filter_by(answer_to=question_id).all()
             context = {
