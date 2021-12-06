@@ -180,7 +180,7 @@ def question(question_id):
             db.session.add(answer)
             db.session.commit()
             return redirect(url_for('answer', question_id=question_id))
-            
+
         #if the solved button is pressed    
         elif request.form.get("solved"):
             answer_id = request.form.get("solved")
@@ -194,14 +194,14 @@ def question(question_id):
 
         #if the Upvote button is pressed
         elif request.form.get("voteUp"):
-            answer_id = request.form.get("voteUp")
+            answer_id = request.form['voteUp']
             current_answer = Answer.query.get_or_404(answer_id)
             voted_by_user = Votes.query.filter_by(voted_by_id = current_user.id, voted_on = answer_id).first()
 
             #check if user has voted already. If not, user vote can be captured
             if voted_by_user == None:
                 voted_by_user = True
-                current_answer = Answer.query.get_or_404(answer_id)
+                #current_answer = Answer.query.get_or_404(answer_id)
                 current_answer.votes = (current_answer.votes + 1)
                 vote_pressed = Votes(voted_by_id = current_user.id, 
                     voted_on = answer_id)
@@ -215,6 +215,7 @@ def question(question_id):
                 answers = q1.order_by(Answer.votes.desc()).all()
                 context = {
                 'question' : question,
+                'current_answer' : current_answer,
                 'answers' : answers
                 }
                 return render_template( 'question_view.html', voted_by_user = False, question_id=question_id, **context)  
@@ -229,16 +230,16 @@ def question(question_id):
                 answers = q1.order_by(Answer.votes.desc()).all()
                 context = {
                 'question' : question,
+                'current_answer' : current_answer,
                 'answers' : answers
                 }
-
                 return render_template( 'question_view.html', voted_by_user = voted_by_user, question_id=question_id, **context)  
 
             
 
         #if the DownVote button is pressed
         elif request.form.get("voteDown"):
-            answer_id = request.form.get("voteDown")
+            answer_id = request.form['voteDown']
             current_answer = Answer.query.get_or_404(answer_id)
             voted_by_user = Votes.query.filter_by(voted_by_id = current_user.id, voted_on = answer_id).first()
 
@@ -259,6 +260,7 @@ def question(question_id):
                 answers = q1.order_by(Answer.votes.desc()).all()
                 context = {
                 'question' : question,
+                'current_answer' : current_answer,
                 'answers' : answers
                 }
                 return render_template( 'question_view.html', voted_by_user = False, question_id=question_id, **context)
@@ -273,6 +275,7 @@ def question(question_id):
                 answers = q1.order_by(Answer.votes.desc()).all()
                 context = {
                 'question' : question,
+                'current_answer' : current_answer,
                 'answers' : answers
                 }
                 return render_template( 'question_view.html', voted_by_user = voted_by_user, question_id=question_id, **context)
