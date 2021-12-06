@@ -55,8 +55,8 @@ they click on one of the displayed questions-->
                       </button>
 
                       <!-- If User alreaday voted once-->
-                      {%if voted_by_user == True %}
-                      <label id="already_voted"> Already voted!</label>
+                      {%if voted_by_user == True and current_answer == answer %}
+                      <label id="already_voted"> Already voted! </label>
                       {%endif %}
                     
                       {%endif %}
