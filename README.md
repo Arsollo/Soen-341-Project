@@ -10,6 +10,9 @@ This project consists of building a Q&A website where people have the opportunit
 2. Voting on the answers  
 3. Accepting the best answer
 
+Extra feature
+1. Editing profile page
+
 ## **Team Developers:**
 
 Arsany Fahmy ~ _Arsollo_ (Team Leader)  
