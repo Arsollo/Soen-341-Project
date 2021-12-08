@@ -1,3 +1,5 @@
+<!-- Register Page (accessible from nav-bar) -->
+
 {% extends "layout.html" %}
 {% block content %}
     <div class="content-section">
@@ -7,10 +9,14 @@
                 <div class="{{ category }}">{{ message }}</div>
             {% endfor %}
         {% endwith %}
+
+        <!-- Form prompting User to enter their acount information -->
         <form method="POST" action="{{url_for('register') }}">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Join Today</legend>
+
+                <!-- Username Input-->
                 <div class="form-group">
                     {{ form.username.label(class="form-control-label") }}
 
@@ -25,6 +31,8 @@
                         {{ form.username(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+
+                <!-- Email Input -->
                 <div class="form-group">
                     {{ form.email.label(class="form-control-label") }}
                     {% if form.email.errors %}
@@ -38,6 +46,8 @@
                         {{ form.email(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+
+                <!-- Password Input -->
                 <div class="form-group">
                     {{ form.password.label(class="form-control-label") }}
                     {% if form.password.errors %}
@@ -51,6 +61,8 @@
                         {{ form.password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+
+                <!-- Confirm Password Input -->
                 <div class="form-group">
                     {{ form.confirm_password.label(class="form-control-label") }}
                     {% if form.confirm_password.errors %}
@@ -65,11 +77,15 @@
                     {% endif %}
                 </div>
             </fieldset>
+
+            <!-- Submit Button -->
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
         </form>
     </div>
+
+    <!-- Prompt User to Sign-in if they already have an account -->
     <div class="border-top pt-3">
         <small class="text-muted">
             Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>

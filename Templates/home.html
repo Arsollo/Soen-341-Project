@@ -1,3 +1,5 @@
+<!-- Home Page (Main page, what user sees when first accessing the website)-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,41 +17,61 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light ">
       <div class="container-fluid">
+        <!-- Website Name-->
         <a class="navbar-brand" href="/">After Office Hours</a>
+        <!-- Button which is only available if screen size is small to diplay more links-->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarScroll">
           <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+
+            <!-- Link to Home Page-->
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
             </li>
+
             <!-- Links to be displayed only if logged in -->
             {% if current_user.is_authenticated %}
+
+            <!-- Link to User Profile Page -->
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('profile') }}">{{current_user.username}}'s Profile</a>
             </li>
+
+            <!-- Link to Ask Page -->
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('ask') }} ">Ask</a>
             </li>
+
+            <!-- Link to Home Page -->
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
             </li>
             {%endif%}
+
             <!-- Links to be displayed only if not logged in -->
             {% if not current_user.is_authenticated %}
+
+            <!-- Link to Sign-in Page -->
             <li class="nav-item">
               <a class="nav-link"href="{{ url_for('login') }} ">Sign in</a>
             </li>
+
+            <!-- Link to Register Page --> 
             <li class="nav-item">
               <a class="nav-link"href="{{ url_for('register') }} ">Register</a>
             </li>
             {%endif%}
+
+            <!-- Link to About-Us Page-->
             <li class="nav-item"></li>
               <a class="nav-link" href="{{ url_for('about') }} ">About Us</a>
-            </li>       
+            </li>   
+
           </ul>
+
+          <!-- Search Bar -->
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
@@ -60,7 +82,7 @@
 
     {% block content %}
 
-    <!-- Welcome Page -->
+    <!-- Welcome Page Displaying all asked questions in the database -->
     <div class="welcome_page">
       <h1 id="question_header">Questions</h1>
     </div>
