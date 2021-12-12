@@ -14,7 +14,7 @@ class BaseTestCase(TestCase):
         db.create_all()
         #db.session.add(User("admin", "ad@min.com", "admin"))
         #db.session.add(
-         #   BlogPost("Test post", "This is a test. Only a test.", "admin"))
+         #   Questions("Test post", "This is a test. Only a test.", "admin"))
         #db.session.commit()
 
     def tearDown(self):
