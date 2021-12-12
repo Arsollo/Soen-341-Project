@@ -4,7 +4,7 @@
 #   - Controlling several HTML & CSS functionalites depending on User behaviour
 
 
-#Important imports
+#Important imports using flask framework
 from datetime import datetime
 from flask import Flask, render_template, url_for, flash, redirect,request
 from flask_login import UserMixin, current_user, login_required, login_user, logout_user, LoginManager
