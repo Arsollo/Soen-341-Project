@@ -1,17 +1,22 @@
+<!-- Edit Question Page (accessible from Profile Page when user clicks button "Edit one of your questions")-->
+
 {% extends "layout.html" %}
 {% block content %}
     <div class="edit_form">
 
+        <!-- Header -->
         <h3 id="edit_title">Edit One of your questions</h3>
         <br>
         
-        <!-- Recently asked questions -->
+        <!-- Recently asked questions by user -->
         <div class="col-9" id="user_questions">
             
             <div id="user_asked_questions">
                 {% if questions != None %}
                 <h2 id="recently_asked">Your recenty asked questions:</h2>
                 <br>
+
+                    <!-- Each of the asked questions to dispkay -->
                     {% for question in questions %}
                     <form action="{{ url_for('edit_questions') }}" method="post">
                         <a href="{{url_for('question', question_id = question.id)}}" class="list-group-item" id="questions_asked">
@@ -21,6 +26,8 @@
                             <p class="list-group-item-text">Solved? {{ question.solved }}</p>
                         </a>
                         <input name="question_id" type="hidden" value="{{question.id}}">
+
+                        <!-- Submit Button-->
                         <input type="submit" value="Delete Question" id="delete_button">
                         <br>
                         <br>

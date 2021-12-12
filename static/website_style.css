@@ -1,4 +1,16 @@
-/** Overall CSS */
+/*
+  Css File for the following pages: 
+  "home.html"
+  "about.html"
+  "answered.html"
+  "ask.html"
+  "profile.html"
+  "question_view.html"
+*/
+
+
+
+/********************* Overall CSS for all pages *********************/
 *
 {
 	margin: 0;
@@ -6,7 +18,7 @@
 }
 
 
-/** Navigation Bar CSS */
+/********************* Navigation bar *********************/
 .navbar-light
 {
 	background-color: rgb(255, 148, 77);
@@ -127,7 +139,7 @@
 
 
 
-/********************* Home Page  *********************/
+/********************* Home Page *********************/
 
 /** Questions Asked**/
 #question_header

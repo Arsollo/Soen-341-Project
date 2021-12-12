@@ -1,3 +1,10 @@
+#Main python file responsible of the following tasks:
+#   - Redirecting Users across the different pages of the website
+#   - Updating and accessing the different databases to submit and retrieve information
+#   - Controlling several HTML & CSS functionalites depending on User behaviour
+
+
+#Important imports
 from datetime import datetime
 from flask import Flask, render_template, url_for, flash, redirect,request
 from flask_login import UserMixin, current_user, login_required, login_user, logout_user, LoginManager
@@ -6,6 +13,7 @@ from werkzeug.security import generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from forms import ProfileForm, RegistrationForm, LoginForm
 
+#Setting-up the different functionalities
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -50,14 +58,17 @@ class Answer(db.Model):
     votes = db.Column(db.Integer)
     voted_best = db.Column(db.Boolean)
 
+#Database class for the votes
 class Votes (db.Model):
     id = id = db.Column(db.Integer, primary_key=True)
     voted_by_id = db.Column(db.String, db.ForeignKey('user.id'))
     voted_on = db.Column(db.Integer, db.ForeignKey('answer.id'))
 
+#cerating and updating the databases
 db.create_all()
 db.session.commit()
 
+#Acknowledge current user accessing the website
 @login_manager.user_loader
 def load_user(user_id):
     print(user_id)
@@ -65,30 +76,41 @@ def load_user(user_id):
 
 login_manager.login_view = "login"
 
-#Home/default page route
+
+
+
+#**************************** Home/default page route ****************************#
 @app.route("/home/")
 @app.route("/")
 def home():
     questions = Question.query.all()
     users = User.query.all()
-
     context = {
         'questions' : questions,
         'users' : users
     }
     return render_template('home.html', **context)
 
-#about/contact us page route
+
+
+
+#**************************** About/Contact-us page route ****************************#
 @app.route("/about/")
 def about():
     return render_template('about.html', title='About')
 
-#Registration page route
+
+
+
+#**************************** Registration page route ****************************#
 @app.route("/register/", methods=['GET', 'POST'])
 def register():
+    #If user is logged-in -> skip
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RegistrationForm()
+
+    #If user submits form properly -> submit form & redirect to home page
     if form.validate_on_submit() and request.method =='POST':
         username = request.form['username']
         email = request.form['email']
@@ -104,26 +126,36 @@ def register():
             return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
-#Login page route
+
+
+
+
+#**************************** Login page route ****************************#
 @app.route("/login/", methods=['GET', 'POST'])
 def login(): 
     form = LoginForm()
+
+    #If user enter the right account info --> redirect to home page & acknowledge his sign-in
     if form.validate_on_submit() and request.method=='POST':
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
         if not user or not (password==user.password):
             flash(u'Login Unsuccessful. Please check username and password', 'error')
-            
         else:
             login_user(user)
             return redirect(url_for('home'))
     return render_template('login.html', title='Login', form=form)
 
-#user profile page
+
+
+
+
+#**************************** User Profile page route ****************************#
 @app.route("/profile")
 @login_required
 def profile():
+        #Display the questions asked by user on the page 
         user = current_user
         email = user.email
         user_name = user.username
@@ -138,13 +170,16 @@ def profile():
             }
         return render_template("profile.html", **context)
 
-# Question Post page route
+
+
+
+#**************************** Ask page route ****************************#
 @app.route("/ask/", methods=['GET', 'POST'])
 @login_required
 def ask():
+    #when suer submits an answer -> save Question to database & redirect to home 
     if request.method == 'POST':
         question = request.form['question']
-
         question = Question(
             q_text = question, 
             asked_by_id =current_user.id,
@@ -157,8 +192,17 @@ def ask():
     else:
         return render_template('ask.html')
 
-#Question/Answer view page
+
+
+
+#**************************** Answers to a specific question View page route ****************************#
 @app.route("/question/<int:question_id>", methods=['GET', 'POST'])
+#There is 3 different scenarios handled on this page:
+#   - User submits a new answer to the question
+#   - User (who has to be the owner of the question) selects the best answer
+#   - User votes Up/Down on an answer
+#   Important Note: The answers are sorted by votes on this page (also handled in this function)
+
 def question(question_id):
     question = Question.query.get_or_404(question_id)
     question_id = question.id
@@ -188,7 +232,6 @@ def question(question_id):
             current_answer.voted_best = True
             question.solved = True
             db.session.commit()
-
             return redirect(url_for('answer', question_id=question_id))
 
 
@@ -297,7 +340,10 @@ def question(question_id):
         }
         return render_template( 'question_view.html', **context)       
 
-#reroute when there is a change to the question page to prevent new entries on refresh
+
+
+
+#**************************** reroute when there is a change to the question page to prevent new entries on refresh ****************************#
 @app.route("/question/<int:question_id>", methods=['GET', 'POST'])
 def answer(question_id):
     question = Question.query.get_or_404(question_id)
@@ -309,7 +355,10 @@ def answer(question_id):
     }
     return render_template('question_view.html', **context)
 
-#Logout route
+
+
+
+#**************************** Logout page route ****************************#
 @app.route("/logout")
 @login_required
 def logout():
@@ -317,7 +366,10 @@ def logout():
     return redirect(url_for("login"))
 
 
-#Edit user profile
+
+
+#**************************** Edit User Profile page(Account Info) route #1 ****************************#
+#This function is simply to redirect to edit_profile.html
 @app.route("/edit_user_profile/")
 def edit_user_profile():
     form = ProfileForm()
@@ -332,7 +384,8 @@ def edit_user_profile():
         }
     return render_template('edit_profile.html', **context, form = form)
 
-#Update user profile info
+#**************************** Edit User Profile page(Account Info) route #2 ****************************#
+#This function allows user to modify their login info & redirect to user profile page
 @app.route("/update_user_profile/", methods=['POST'])
 def update_user_profile():
     user_to_update = current_user
@@ -350,7 +403,12 @@ def update_user_profile():
         return redirect(url_for('edit_user_profile'))
 
 
-#go to edit_user_questions
+
+
+
+
+#**************************** Edit User Profile page(Questions asked) route #1 ****************************#
+#This function is simply to redirect to edit_quesitons.html
 @app.route("/go_to_edit_questions/")
 def go_to_edit_questions():
     user = current_user
@@ -360,7 +418,8 @@ def go_to_edit_questions():
         }
     return render_template("edit_questions.html", **context)
 
-#Edit User questions
+#**************************** Edit User Profile page(Questions asked) route #2 ****************************#
+#This function allows user to delete a previously asked question then redirect to User profile page
 @app.route("/edit_questions/", methods=['POST'])
 def edit_questions():
     user = current_user
@@ -375,6 +434,10 @@ def edit_questions():
         db.session.delete(question_to_delete)
         db.session.commit()
         return render_template("edit_questions.html", **context)
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
