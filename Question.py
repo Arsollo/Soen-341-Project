@@ -4,6 +4,7 @@
 #   - Controlling several HTML & CSS functionalites depending on User behaviour
 
 
+
 #Important imports using flask framework
 from datetime import datetime
 from flask import Flask, render_template, url_for, flash, redirect,request
